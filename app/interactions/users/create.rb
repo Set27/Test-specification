@@ -8,7 +8,7 @@ class Users::Create < ActiveInteraction::Base
     string :country
     string :gender, default: nil, in: %w[male female]
     array :interests, default: []
-    string :skills, default: ''
+    string :skills, default: ""
   end
 
   validate :validate_age
@@ -25,11 +25,11 @@ class Users::Create < ActiveInteraction::Base
   private
 
   def validate_age
-    errors.add(:age, 'must be between 1 and 90') unless (1..90).cover?(params[:age])
+    errors.add(:age, "must be between 1 and 90") unless (1..90).cover?(params[:age])
   end
 
   def validate_email_uniqueness
-    errors.add(:email, 'has already been taken') if User.exists?(email: params[:email])
+    errors.add(:email, "has already been taken") if User.exists?(email: params[:email])
   end
 
   def create_user
@@ -48,7 +48,7 @@ class Users::Create < ActiveInteraction::Base
   end
 
   def assign_skills(user)
-    skills = params[:skills].split(',').map do |skill_name|
+    skills = params[:skills].split(",").map do |skill_name|
       Skill.find_by(name: skill_name.strip)
     end.compact
 
