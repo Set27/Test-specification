@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_01_09_123141) do
+ActiveRecord::Schema[8.0].define(version: 2025_01_09_124302) do
   create_table "interests", force: :cascade do |t|
     t.string "name"
     t.integer "user_id", null: false
@@ -19,12 +19,12 @@ ActiveRecord::Schema[8.0].define(version: 2025_01_09_123141) do
     t.index ["user_id"], name: "index_interests_on_user_id"
   end
 
-  create_table "skils", force: :cascade do |t|
+  create_table "skills", force: :cascade do |t|
     t.string "name"
     t.integer "user_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["user_id"], name: "index_skils_on_user_id"
+    t.index ["user_id"], name: "index_skills_on_user_id"
   end
 
   create_table "users", force: :cascade do |t|
@@ -40,5 +40,5 @@ ActiveRecord::Schema[8.0].define(version: 2025_01_09_123141) do
   end
 
   add_foreign_key "interests", "users"
-  add_foreign_key "skils", "users"
+  add_foreign_key "skills", "users"
 end
