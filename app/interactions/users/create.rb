@@ -6,19 +6,20 @@ class Users::Create < ActiveInteraction::Base
     integer :age
     string :nationality
     string :country
-    string :gender, default: nil, in: %w[male female]
+    string :gender, default: nil
     array :interests, default: []
     string :skills, default: ""
   end
 
   validate :validate_age
-  validate :validate_gender
   validate :validate_email_uniqueness
+  validate :validate_gender
 
   def execute
     user = create_user
     assign_interests(user)
     assign_skills(user)
+
     user
   end
 
@@ -32,8 +33,12 @@ class Users::Create < ActiveInteraction::Base
     errors.add(:email, "has already been taken") if User.exists?(email: params[:email])
   end
 
+  def validate_gender
+    errors.add(:gender, "must be either 'male' or 'female'") unless params[:gender].in?(%w[male female])
+  end
+
   def create_user
-    user_full_name = "#{params[:surname]} #{params[:name]} #{params[:patronymic]}"
+    user_full_name = "#{params[:name]} #{params[:patronymic]}"
     user_params = params.except(:interests, :skills)
     User.create(user_params.merge(full_name: user_full_name))
   end
