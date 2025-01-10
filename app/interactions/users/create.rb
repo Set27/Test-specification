@@ -22,9 +22,8 @@ class Users::Create < ActiveInteraction::Base
   private
 
   def create_user
-    user_full_name = "#{params[:name]} #{params[:patronymic]}"
     user_params = params.except(:interests, :skills)
-    User.create(user_params.merge(full_name: user_full_name))
+    User.create(user_params)
   end
 
   def assign_interests(user)

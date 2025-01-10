@@ -9,4 +9,8 @@ class User < ApplicationRecord
   validates_uniqueness_of :email
   validates :age, inclusion: { in: 1..90, message: "must be between 1 and 90" }
   validates :gender, inclusion: { in: %w[male female], message: "must be either 'male' or 'female'" }
+
+  def full_name
+    "#{name} #{patronymic}"
+  end
 end

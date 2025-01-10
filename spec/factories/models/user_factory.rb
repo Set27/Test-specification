@@ -9,6 +9,5 @@ FactoryBot.define do
     gender { [ 'male', 'female' ].sample }
     created_at { Time.now }
     updated_at { Time.now }
-    full_name { "#{name} #{patronymic}" }
   end
 end
