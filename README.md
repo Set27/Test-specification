@@ -1,24 +1,29 @@
-# README
+Линка на задание https://gist.github.com/wwwermishel/fd2c7973520c270c508720ba3a20e09c
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+Пройдёмся по пунктам:
+1. Использовать gem ActiveInteraction => https://github.com/AaronLasseigne/active_interaction отрефакторить класс Users::Create
 
-Things you may want to cover:
+Я вынес логику в модель, в таком случае мы точно уверены, что в БД у нас будет валидный узер, в каком бы месте мы бы не
+создавали юзера
 
-* Ruby version
+2. Исправить опечатку Skil. Есть 2 пути решения. Описать оба.
 
-* System dependencies
+Первый способ я и сделал, создал миграцию с rename_table, и далее переименовал все упоминания.
 
-* Configuration
+Второй способ `self.table_name = 'skils'` в классе Skill (его мы тоже правим), в таком случа не надо создавать миграцию.
 
-* Database creation
+3. Исправить связи
 
-* Database initialization
+Можно было использовать `has_many_and_belongs_to` но я решила через промежуточные таблицы
 
-* How to run the test suite
+4. Поднять Rails приложение и в нем использовать класс Users::Create
 
-* Services (job queues, cache servers, search engines, etc.)
+---уточняется---
 
-* Deployment instructions
+5. Написать тесты
 
-* ...
+Написал на модель юзера и Users::Create
+
+6. При рефакторнге кода использовать Декларативное описание(подход в программировании)
+
+Вынесение валидаций в модель выглядит очень декларативно
