@@ -6,7 +6,7 @@ class Users::Create < ActiveInteraction::Base
     integer :age
     string :nationality
     string :country
-    string :gender, default: nil
+    string :gender
     array :interests, default: []
     string :skills, default: ""
   end
