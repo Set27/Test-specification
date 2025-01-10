@@ -75,5 +75,13 @@ RSpec.describe Users::Create do
         end
       end
     end
+
+    context 'when params is missing' do
+      it 'raises an error' do
+        missing_params = valid_params.deep_merge(params: { name: '' })
+        expect { described_class.run!(missing_params) }.to raise_error(ActiveInteraction::InvalidInteractionError,
+                                                                      /Name must be present/)
+      end
+    end
   end
 end
