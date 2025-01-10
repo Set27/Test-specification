@@ -50,15 +50,7 @@ RSpec.describe Users::Create do
 
       context 'when email is not unique' do
         before do
-          User.create!(
-            name: 'Existing',
-            patronymic: 'User',
-            email: valid_params[:params][:email],
-            age: 30,
-            nationality: 'Belarusian',
-            country: 'Belarus',
-            gender: 'male',
-          )
+          create(:user, { email: valid_params[:params][:email] })
         end
 
         it 'raises an error' do
