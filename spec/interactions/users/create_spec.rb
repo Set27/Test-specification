@@ -19,12 +19,8 @@ RSpec.describe Users::Create do
     end
 
     before do
-      Interest.create(name: 'coding')
-      Interest.create(name: 'reading')
-
-      Skill.create(name: 'Ruby')
-      Skill.create(name: 'Rails')
-      Skill.create(name: 'RSpec')
+      %w[coding reading].each { |name| create(:interest, name:) }
+      %w[Ruby Rails RSpec].each { |name| create(:skill, name:) }
     end
 
     context 'with valid params' do
