@@ -43,7 +43,7 @@ RSpec.describe Users::Create do
       context 'when age is out of range' do
         it 'raises an error' do
           invalid_params = valid_params.deep_merge(params: { age: 91 })
-          expect { described_class.run!(invalid_params) }.to raise_error(ActiveInteraction::InvalidInteractionError,
+          expect { described_class.run!(invalid_params) }.to raise_error(ActiveRecord::RecordInvalid,
                                                               /Age must be between 1 and 90/)
         end
       end
@@ -62,7 +62,7 @@ RSpec.describe Users::Create do
         end
 
         it 'raises an error' do
-          expect { described_class.run!(valid_params) }.to raise_error(ActiveInteraction::InvalidInteractionError,
+          expect { described_class.run!(valid_params) }.to raise_error(ActiveRecord::RecordInvalid,
                                                             /Email has already been taken/)
         end
       end
@@ -70,17 +70,17 @@ RSpec.describe Users::Create do
       context 'when gender is invalid' do
         it 'raises an error' do
           invalid_params = valid_params.deep_merge(params: { gender: 'invalid' })
-          expect { described_class.run!(invalid_params) }.to raise_error(ActiveInteraction::InvalidInteractionError,
+          expect { described_class.run!(invalid_params) }.to raise_error(ActiveRecord::RecordInvalid,
                                                                         /Gender must be either 'male' or 'female'/)
         end
       end
     end
 
-    context 'when params is missing' do
+    context 'when name is blank' do
       it 'raises an error' do
         missing_params = valid_params.deep_merge(params: { name: '' })
-        expect { described_class.run!(missing_params) }.to raise_error(ActiveInteraction::InvalidInteractionError,
-                                                                      /Name must be present/)
+        expect { described_class.run!(missing_params) }.to raise_error(ActiveRecord::RecordInvalid,
+                                                                      /Name can't be blank/)
       end
     end
   end

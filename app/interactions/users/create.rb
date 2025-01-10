@@ -11,21 +11,6 @@ class Users::Create < ActiveInteraction::Base
     string :skills, default: ""
   end
 
-  validate :validate_age
-  validate :validate_email_uniqueness
-  validate :validate_gender
-
-  validate do
-    required_keys = [ :name, :patronymic, :email, :age, :nationality, :country, :gender ]
-    missing_keys = required_keys.reject { |key| params[key].present? }
-
-    if missing_keys.any?
-      missing_keys.each do |key|
-        errors.add(key, "must be present")
-      end
-    end
-  end
-
   def execute
     user = create_user
     assign_interests(user)
@@ -35,18 +20,6 @@ class Users::Create < ActiveInteraction::Base
   end
 
   private
-
-  def validate_age
-    errors.add(:age, "must be between 1 and 90") unless (1..90).cover?(params[:age])
-  end
-
-  def validate_email_uniqueness
-    errors.add(:email, "has already been taken") if User.exists?(email: params[:email])
-  end
-
-  def validate_gender
-    errors.add(:gender, "must be either 'male' or 'female'") unless params[:gender].in?(%w[male female])
-  end
 
   def create_user
     user_full_name = "#{params[:name]} #{params[:patronymic]}"
