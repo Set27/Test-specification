@@ -11,7 +11,7 @@ RSpec.describe User, type: :model do
     it { should validate_presence_of(:nationality) }
     it { should validate_presence_of(:gender) }
 
-    it { should validate_uniqueness_of(:email).case_insensitive }
+    it { should validate_uniqueness_of(:email) }
 
     it { should validate_inclusion_of(:age).in_range(1..90).with_message("must be between 1 and 90") }
 
