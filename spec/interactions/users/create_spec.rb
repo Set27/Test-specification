@@ -13,7 +13,7 @@ RSpec.describe Users::Create do
           country: 'Belarus',
           gender: 'male',
           interests: [ 'coding', 'reading' ],
-          skills: 'Ruby, Rails, RSpec'
+          skills: 'Ruby,Rails,RSpec'
         }
       }
     end

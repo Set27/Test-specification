@@ -12,11 +12,13 @@ class Users::Create < ActiveInteraction::Base
   end
 
   def execute
-    user = create_user
-    assign_interests(user)
-    assign_skills(user)
+    User.transaction do
+      user = create_user
+      assign_interests_to(user)
+      assign_skills_to(user)
 
-    user
+      user
+    end
   end
 
   private
@@ -26,22 +28,21 @@ class Users::Create < ActiveInteraction::Base
     User.create(user_params)
   end
 
-  def assign_interests(user)
+  def assign_interests_to(user)
     interests = Interest.where(name: params[:interests])
+
     user.interests << interests
-    # I have left original save methods for each assign method (assign_interests, assign_skills)
-    # That is depend on business logic I guess
-    # Maybe skills less important than interests
-    user.save!
+    user.save
   end
 
-  def assign_skills(user)
-    skills = params[:skills].split(",").map do |skill_name|
-      # Could be find_or_create_by I guess this depend on business logic too
-      Skill.find_by(name: skill_name.strip)
-    end.compact
+  def assign_skills_to(user)
+    skills = Skill.where(name: skills_array)
 
-    user.skills = skills
+    user.skills << skills
     user.save
+  end
+
+  def skills_array
+    params[:skills].split(",").map(&:strip).reject(&:empty?)
   end
 end
