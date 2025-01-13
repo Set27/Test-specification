@@ -1,21 +1,19 @@
 class UsersController < ApplicationController
   def create
-    outcome = Users::Create.run(user_params)
+    user_creation = Users::Create.run(permitted_user_params)
 
-    respond_to do |format|
-      if outcome.valid?
-        result = outcome.result
-        format.json { render json: result, status: :created }
-      else
-        @errors = result.errors
-        format.json { render json: @errors, status: :unprocessable_entity }
-      end
+    if user_creation.valid?
+      created_user = user_creation.result
+      render json: created_user, status: :created
+    else
+      creation_errors = user_creation.errors
+      render json: creation_errors, status: :unprocessable_entity
     end
   end
 
   private
 
-  def user_params
+  def permitted_user_params
     params.require(:user).permit(:name, :patronymic, :email, :age, :nationality, :country, :gender, interests: [], skills: "")
   end
 end

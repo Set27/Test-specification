@@ -17,6 +17,8 @@ class Users::Create < ActiveInteraction::Base
     assign_skills_to(user)
 
     user.save!
+
+    user
   end
 
   private
