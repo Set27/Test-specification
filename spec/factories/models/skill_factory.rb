@@ -1,5 +1,5 @@
 FactoryBot.define do
   factory :skill do
-    name { "Default Skill" }
+    name { Faker::Games::LeagueOfLegends.summoner_spell }
   end
 end

@@ -1,5 +1,5 @@
 FactoryBot.define do
   factory :interest do
-    name { "Default Interest" }
+    name { Faker::Book.title }
   end
 end
