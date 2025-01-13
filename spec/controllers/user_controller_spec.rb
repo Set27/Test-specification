@@ -14,7 +14,7 @@ RSpec.describe "Users", type: :request do
         nationality: "American",
         country: "USA",
         gender: "male",
-        interests: ["Programming", "Reading"],
+        interests: [ "Programming", "Reading" ],
         skills: "Ruby, Rails"
       }
     end
